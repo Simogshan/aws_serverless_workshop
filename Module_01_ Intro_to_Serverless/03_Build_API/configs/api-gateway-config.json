@@ -1,0 +1,17 @@
+{
+    "id": "th8bx997g6",
+    "name": "ServerlessREST",
+    "createdDate": "2026-09-06T20:08:22+05:30",
+    "apiKeySource": "HEADER",
+    "endpointConfiguration": {
+        "types": [
+            "REGIONAL"
+        ],
+        "ipAddressType": "ipv4"
+    },
+    "tags": {},
+    "disableExecuteApiEndpoint": false,
+    "rootResourceId": "a0hhga7vwd",
+    "securityPolicy": "TLS_1_0",
+    "apiStatus": "AVAILABLE"
+}
