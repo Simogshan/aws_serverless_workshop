@@ -1,0 +1,17 @@
+import json
+
+def lambda_handler(event, context):
+
+    # Mock Line item for an Order 
+    line_item = {
+        'sku':123456,
+        'color':'blue',
+        'quantity':42,
+        'in_stock': True
+    }
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps(line_item, sort_keys=True),
+        ##'body':json.dumps(context.line_item)
+    }
