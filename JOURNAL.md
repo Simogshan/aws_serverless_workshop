@@ -64,3 +64,65 @@
 ### Error
 
 *Didn't encountered Errors during the API Gateway session -- everything was done through the console and the code was simple.
+
+---
+
+## Module 02: Synchronous Invocation : September 14, 2026
+
+### What I Learned
+- In larger projects, we need many more resources and have to provision infrastructure for many developers and environments such as dev, stage, prod
+- Web-based console is easy and broad, but it will slow you down and make you prone to mistakes
+- We are going to use *Infrastructure as Code (IaC)* to define, deploy and test service resource and code
+- Client wants to migrate exisiting framework to serverless. As a first step we move our operation to monolithic, or mono-lambda function.
+- Here we are going to use a mono-lambda function, which contains the entire application logic and routes to incoming events because it may be easy to understand what is happening internally. 
+
+## Part 01 : SAM + Python
+
+### What I Learned
+- AWS CloudFormation is a form of IaC, CFN templates are written in YAML or JSON 
+- __AWS Serverless Application Model (AWS SAM)__ templates declare infrastructure resources, such as functions, APIs and databases.
+- When AWS SAM templates are used to provision infrastructure, they are first transformed into  CFN Templates
+- If you define __Transform: AWS::Serverless-2016-10-31__ in CFN template automatically considered as SAM Template
+
+`Note: The AWS Workshop provide files and folders for the project structure`
+
+### Section 01 : Create Data Store
+
+### What I Learned
+- Created a table in DynamoDB using AWS SAM CFN Template 
+- __Resources__ Section is very important in Cloudformation Template because it's the only thing mandatory to build the infrastructure
+- Learned about __Intrinsic Function__, it means built-in function to assign values to properties that are not available until runtime. here used !Sub called __substitute__
+
+### Commands
+
+1. __sam build__ : processes your AWS SAM template file
+
+2. __sam validate__ : validates your AWS SAM template YAML content
+
+3. __sam deploy --guided --stack-name example__ : deploys the project after building it, --guided used for first time per region. this mode shows the parameter required for deployment, provides default option, and save them
+
+4. __sam delete --stack-name example__: deletes entire project along with permissions, stacks from CFN, other services
+
+### Error
+
+1. Error: [InvalidGlobalsSectionException('Globals', 'It must be a non-empty dictionary')] ('Globals', 'It must be a non-empty dictionary')  
+   ErrorType:   
+   Cause: Globals: -> section in template.yaml file  
+   ErrorHappenedAt: During sam build command  
+   Fix: Commented Global Section, because it wasn't needed for this build  
+
+2. Error: Failed to create changeset for the stack: ws-serverless-patterns-users,  
+   ErrorType:  
+   Cause: `- AttributeName: userid  - AttributeType: S`  
+   ErrorHappenedAt: During sam build command  
+   Fix: Removed extra - from AttributeType because __-__ consider Array in YAML
+
+3. Error: Failed to create/update the stack: ws-serverless-patterns-users,  
+   ErrorType:  
+   Cause: KeyType: Hash  
+   ErrorHappenedAt: During sam deploy command  
+   Fix: Hash should be Caps HASH
+
+4. Note: Indentation matters in YAML.
+   
+
