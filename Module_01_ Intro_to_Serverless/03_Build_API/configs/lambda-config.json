@@ -1,9 +1,9 @@
 {
     "Configuration": {
         "FunctionName": "getUsersFromServerlessWorkshop",
-        "FunctionArn": "arn:aws:lambda:us-east-1:014044355393:function:getUsersFromServerlessWorkshop",
+        "FunctionArn": "arn:aws:lambda:us-east-1:[account-id]:function:getUsersFromServerlessWorkshop",
         "Runtime": "python3.12",
-        "Role": "arn:aws:iam::014044355393:role/service-role/getUsersFromServerlessWorkshop-role-ogmyeg1l",
+        "Role": "arn:aws:iam::[account-id]:role/service-role/getUsersFromServerlessWorkshop-role-ogmyeg1l",
         "Handler": "lambda_function.lambda_handler",
         "CodeSize": 280,
         "Description": "",
@@ -37,8 +37,5 @@
             "LogGroup": "/aws/lambda/getUsersFromServerlessWorkshop"
         }
     },
-    "Code": {
-        "RepositoryType": "S3",
-        "Location": "https://prod-04-2014-tasks.s3.us-east-1.amazonaws.com/snapshots/014044355393/getUsersFromServerlessWorkshop-066b450e-7f97-4604-86f2-155d17847f0a?versionId=JHjYfBRRWwgZ76p6Y3NgtMytsK1POqc1&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJIMEYCIQCYYmJEDw%2B7xw7YErT37KNBorqWOYHLKDYxiv4h18o8vgIhAN6orI0WcQyQZeiIHnhg26iT6mUv8N11LiLryBPhxjk9KpQCCMf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNzQ5Njc4OTAyODM5IgyWNpBLY8NkF7pwy3Mq6AFu3aRXCZThPBtOWInjQmrtbBO%2F%2F4EEtpuqXxNlr3qRNpMJwMuYIp1%2BvdRmO9Zy6qFNEviJWJGOxVsR%2BttPODxNPpSNk3Mo9prls4mXXw436zyhlTcQYBnlgJS52Co0OdWaz6wvfh%2B4ksYRJSeSyz4BLG%2BZ%2FsYzwBVgEYBlr8Q07qf12zprzROBW82GlJ6tNaVLD3U67KpVfSTcYP%2BvLVsFq0atF%2BriYB%2BCPhFm%2BVzh7uagjTRlupTdLWT0if%2BX6mCtoQ7sl5E6f84GEOGRdw5x9FEWY8jRr%2FeguqJgA6enSg4BQAqtm29cMNOOmdUGOowBMNIE%2Bf%2BTd9OnrlUNa9GoUTgoxuhizUxujpn7HzwrlWRucUww%2B0TZnEvRwAHg5kw%2BJOG9fghWmokHQoCIWPDp3zF3egBxBQRrZ9hSjAUwveBmB6v1v29NSpEqkltKxK5hCuFZBdd3dOv4HMuSYBUnfswKM5nyBUn0%2Fp3INXpPa1GJsWFKde5v3lCizNY%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260913T141929Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=ASIA25DCYHY3W2EC6XLM%2F20260913%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=784295bb295e14f304bb5f3af67118bf5f817449bb324c0a0c7efa78804ac9ef"
-    }
+   
 }
