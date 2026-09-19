@@ -22,7 +22,7 @@
         },
         "TableSizeBytes": 211,
         "ItemCount": 4,
-        "TableArn": "arn:aws:dynamodb:us-east-1:014044355393:table/serverless_workshop_intro",
+        "TableArn": "arn:aws:dynamodb:us-east-1:[account-id]:table/serverless_workshop_intro",
         "TableId": "4274b3bc-8699-4a43-8c40-e28bc580e47d",
         "BillingModeSummary": {
             "BillingMode": "PAY_PER_REQUEST",
