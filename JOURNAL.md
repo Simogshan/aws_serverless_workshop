@@ -105,20 +105,20 @@
 
 ### Error
 
-1. Error: [InvalidGlobalsSectionException('Globals', 'It must be a non-empty dictionary')] ('Globals', 'It must be a non-empty dictionary')  
-   ErrorType:   
+1. Error: Globals, It must be a non-empty dictionary  
+   ErrorType:InvalidGlobalsSectionException   
    Cause: Globals: -> section in template.yaml file  
    ErrorHappenedAt: During sam build command  
    Fix: Commented Global Section, because it wasn't needed for this build  
 
 2. Error: Failed to create changeset for the stack: ws-serverless-patterns-users,  
-   ErrorType:  
+   ErrorType:ValidationError  
    Cause: `- AttributeName: userid  - AttributeType: S`  
    ErrorHappenedAt: During sam build command  
    Fix: Removed extra - from AttributeType because __-__ consider Array in YAML
 
 3. Error: Failed to create/update the stack: ws-serverless-patterns-users,  
-   ErrorType:  
+   ErrorType:ValidationError  
    Cause: KeyType: Hash  
    ErrorHappenedAt: During sam deploy command  
    Fix: Hash should be Caps HASH
