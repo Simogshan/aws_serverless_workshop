@@ -125,4 +125,14 @@
 
 4. Note: Indentation matters in YAML.
    
+### Section 02 : Add Business Logic 
+
+### What I Learned
+- Created Lambda function with existed Dynamodb Usertable template which has become version 2 template
+- Created python file which contains business logic contains, getuser, deleteuser, adduser, getuse by ID, updateuser by ID
+- Created and add dependencies in requirement file 
+
+### Errors
+
+1. Error: 
 
