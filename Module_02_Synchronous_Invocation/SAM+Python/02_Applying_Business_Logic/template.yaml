@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'       # Cloudformation Template
+Transform: AWS::Serverless-2016-10-31        # SAM Implement
+Description: >
+  SAM Template for ws-serverless-patterns v1 - Data Store
+
+Globals:                                    # <-- resloved: SAM Interpretation, in template sometimes may have common configurations eg: runtime, memory, environment, CORS. Instead of duplicating them in every resource, you're applying or declaring them in one place that is called Global
+  Function:
+    Runtime: python3.12
+    MemorySize: 128
+    Timeout: 100
+    Tracing: Active                         # <-- resolved: Specifies the function's X-Ray tracing mode [Monitor]
+
+Resources:
+  UsersTable:                               # Implementing Table name in Dynamodb ? should i say object for template for unique serivce
+    Type: AWS::DynamoDB::Table              # Implementing / mentioning service 
+    Properties:
+      TableName: !Sub ${AWS::StackName}-Users  # Implementing / Creating Table in Dynamodb using Sub Funtion or else CFN may creates long unique name
+      AttributeDefinitions:                    # <-- resolved: act as a basic condition to create column and data type and also to identify/define primary key and sort key
+        - AttributeName: userid                # <-- resolved: first column in table which may act as primary key?
+          AttributeType: S
+      KeySchema:                               # <-- resolved:  mentioning column which going to act as a primary key 
+        - AttributeName: userid
+          KeyType: HASH                        # <-- resolved: identified as partition key if its RANGE it means sort key: Y partition not primary? resolved : because dynamodb splits data to multiple servers (partition) so when you call items/row , dynamodb knows which partition your item was 
+      BillingMode: PAY_PER_REQUEST             # Type of Billing 
+
+  UsersFunction:                            # Again, here should i call template object?
+    Type: AWS::Serverless::Function         # Implementing Service
+    Properties:
+      Handler: src/api/users.lambda_handler   # Source / path to the python code !!
+      Description: Handler for all users related operations
+      Environment:                          # <-- resolved: tells the system to create environment variable that your code (AWS lambda fn) can read while it is running. 
+        Variables:                          # <-- resolved: only under ENvironement property for lambda function / Serverless lambda function
+          USER_TABLES: !Ref UsersTable      # <-- resolved: USERS_TABLE is the key of env_var and value is the physical resource name of Dynamodb table, instead of hardcording we're applying dynamic way.
+      Policies:                             # Giving IAM permission to handle execution to Dynamodb Table refering table
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UsersTable
+      Tags:
+        Stack: !Sub "${AWS::StackName}"     # <-- Tag but why ?
+
+Outputs:                                    # output in terminal ?
+  UsersTable:                               # <--
+    Description: DynamoDB Users Table
+    Value: !Ref UsersTable                  # <-- 
+
+  UsersFunction:                            # <--
+    Description: "Lambda function used to perform actions on the users data"
+    Value: !Ref UsersFunction               # <--
