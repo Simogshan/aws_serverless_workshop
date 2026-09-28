@@ -1,5 +1,13 @@
 # Python-Syntax-Glossary.md
 
+## stdlib
+**Syntax**  `import libraries`  
+**Example (AWS Workspace):** `import json` where access to the built-in json library used to parse, manipulate and write json data  
+**Definition:** The library contains built-in modules that provides access to system functionality such as file I/O that would otherwise be inaccessible to Python programmers.  
+**More examples:**
+ - `import uuid`
+ - `import boto3`
+
 ## f-string
 **Syntax:** `f"...{variable}..."`  
 **Example (AWS Workspace):** `f"{event['httpMethod']} {event['resource']}"` 
