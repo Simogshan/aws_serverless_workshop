@@ -84,5 +84,5 @@
 13. Call put_item to replace the old item to new / updated item with the exisiting userid
 14. status code = 400
 15. exception raised -- Name error
-16. Return {statusCode: 400, body: Items is not defined}
-Exception raise error if something happened in code syntax, runtime errors, client request error
+16. Return {statusCode: 400, body: Items is not defined}  
+`Exception raise error if something happened in code syntax, runtime errors, client request error`
