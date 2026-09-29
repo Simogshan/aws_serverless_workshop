@@ -50,7 +50,7 @@
 ## Trace PUT /users/{userid}
 
 1. Request arrived: event['httpMethod'] = 'PUT', event['resource'] = '/users/{userid}'
-2. route_key = "PUT/users/{userid}'
+2. route_key = "PUT /users/{userid}"
 3. response_body/status_code set to defaults
 4. Enter try block
 5. Check route_key == 'GET /users'? No -- skip
@@ -62,15 +62,16 @@
 11. Creating new key named timestamp to add current date and time wiht isoformat for update
 12. request_json['userid'] -> calling userid from the URL path 
 13. call put_item to replace the old item to new / updated item with the exisiting userid
-14. response_body is updated to current request_join
+14. response_body is updated to current request_json
 15. status_code = 200
+16. route_key == 'PUT' request is last in the file, So there's nothing left to skip
 16. No exception raised -- skip except block
 17. Return {statusCode: 200, body: json string of the item, headers}
 
 ## Trace Exception 
 
 1. Request arrived: event['httpMethod'] = 'PUT', event['resource'] = '/users/{userid}'
-2. route_key = "PUT/users/{userid}'
+2. route_key = "PUT /users/{userid}"
 3. response_body/status_code set to defaults
 4. Enter try block
 5. Check route_key == 'GET /users'? No -- skip
@@ -79,7 +80,7 @@
 8. Check route_key == 'DELETE /users/{userid}'? No -- skip
 9. Check route_key == 'PUT /users/{userid}'? Yes -- enter this block
 10. Convert JSON RAW strings into python object by calling json.loads
-11. Creating new key named timestamp to add current date and time wiht isoformat for update
+11. Creating new key named timestamp to add current date and time with isoformat for update
 12. request_json['userid'] -> calling userid from the URL path 
 13. Call put_item to replace the old item to new / updated item with the exisiting userid
 14. status code = 400
