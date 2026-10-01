@@ -134,5 +134,9 @@
 
 ### Errors
 
-1. Error: 
+1. Error: \"name 'ddbtable' is not defined\"  
+   ErrorType:ValidationError  
+   Cause: ddtable
+   ErrorHappenedAt: During Lambda Test Event
+   Fix: Renamed ddtable into ddTable
 
