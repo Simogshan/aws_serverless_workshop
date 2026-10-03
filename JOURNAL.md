@@ -134,9 +134,38 @@
 
 ### Errors
 
+1. Error: invalid syntax (users.py, line 18)  
+   ErrorType: Runtime.UserCodeSyntaxError  
+   Cause: response_body == {'Message': 'Unsupported route'}  
+   ErrorHappenedAt: During Lambda Test Invoke  
+   ErrorPhase: Before Init -- never reached handler  
+   Fix: response_body = {'Message': 'Unsupported route'} 
+
+2. Error: unindent does not match any outer indentation level (users.py, line 100)  
+   ErrorType: RunTime.UserCodeSyntaxError  
+   Cause:  """Sample pure 
+   ErrorHappenedAt: During Lambda Test Invoke
+   ErrorPhase: Before Init -- never reached handler
+   Fix: """Sample pure - fixed indentation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 1. Error: \"name 'ddbtable' is not defined\"  
    ErrorType:ValidationError  
    Cause: ddtable
-   ErrorHappenedAt: During Lambda Test Event
+   ErrorHappenedAt: During Lambda Test Event Invoke
    Fix: Renamed ddtable into ddTable
 
