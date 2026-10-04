@@ -3,6 +3,7 @@
 ## stdlib
 **Syntax**  `import libraries`  
 **Example (AWS Workspace):** `import json` where access to the built-in json library used to parse, manipulate and write json data  
+**Result:** after `import json`, the functions `json.loads()` & `json.dumps()` become available to use  
 **Definition:** The library contains built-in modules that provides access to system functionality such as file I/O that would otherwise be inaccessible to Python programmers.  
 **More examples:**
  - `import uuid`
@@ -101,3 +102,9 @@
 **Definition:** Calls a method, then immediately calls another on THAT result — read strictly left to right.  
 **More examples:**
 - `"  hello  ".strip().upper()` → Result: `'HELLO'`
+
+## Exception
+**Syntax:** `except SomeException as variable_name:`  
+**Example (AWS Workspace):** `except Exception as err:` 
+**Result:** after `uuid.uuid()` failed, err helds an __AttributeError__, and `str(err)` turned into an `"body": "{\"Error:\": \"module 'uuid' has no attribute 'uuid'\"}`  
+**Definition:** It's an event that disrupts the normal flow of a code instruction during its execution. kind of an alarm system, when code encounters an unexpected turn of event where it can't resolve on own. so it raises an exception to alert something went wrong.

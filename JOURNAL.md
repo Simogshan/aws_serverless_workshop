@@ -138,34 +138,65 @@
    ErrorType: Runtime.UserCodeSyntaxError  
    Cause: response_body == {'Message': 'Unsupported route'}  
    ErrorHappenedAt: During Lambda Test Invoke  
-   ErrorPhase: Before Init -- never reached handler  
+   ErrorPhase: Before/Init -- never reached handler  
    Fix: response_body = {'Message': 'Unsupported route'} 
 
 2. Error: unindent does not match any outer indentation level (users.py, line 100)  
-   ErrorType: RunTime.UserCodeSyntaxError  
-   Cause:  """Sample pure 
-   ErrorHappenedAt: During Lambda Test Invoke
-   ErrorPhase: Before Init -- never reached handler
+   ErrorType: IndentationError  
+   Cause:  """Sample pure  
+   ErrorHappenedAt: During Lambda Test Invoke  
+   ErrorPhase: Before/Init -- never reached handler  
    Fix: """Sample pure - fixed indentation
 
+3. Error: Required parameter name not set   
+   ErrorType: ValueError  
+   Cause:  USERS_TABLE - Environment variable not matched  
+   ErrorHappenedAt: During Lambda Test Invoke  
+   ErrorPhase: Before/Init -- never reached handler  
+   Fix: USER_TABLES
 
+4. Error: 'httpMehod'     
+   ErrorType: KeyError  
+   Cause:  test event JSON was missing the 'httpMethod' key, so event ['httpMethod'] on line 16 had nothing to find  
+   ErrorHappenedAt: During Lambda Test Invoke  
+   ErrorPhase: Runtime -- Uncaught (route_key sits outside the try block, so except never gets a chance to catch this)  
+   Fix: corrected the test event JSON to include httpMethod
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-1. Error: \"name 'ddbtable' is not defined\"  
+5. Error: "name 'ddbtable' is not defined"  
    ErrorType:ValidationError  
-   Cause: ddtable
-   ErrorHappenedAt: During Lambda Test Event Invoke
+   Cause: ddtable  
+   ErrorHappenedAt: During Lambda Test Event Invoke  
+   ErrorPhase: After/Runtime -- caught by except  
    Fix: Renamed ddtable into ddTable
+
+6. Error: "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"  
+   ErrorType: JSONDecodeError  
+   Cause: "body": "{invalid json"  
+   ErrorHappenedAt: During Lambda Test Event Invoke  
+   ErrorPhase:  After/Runtime -- caught by except  
+   Fix: "body": "{invalid json}"  
+   ```Note: This error is intentionally made to check test event to see what kind of error makes for to note trace excepton```
+
+7. Error: module 'uuid' has no attribute 'uuid'  
+   ErrorType: AttributeError  
+   Cause: request_json['userid'] = str(uuid.uuid())  
+   ErrorHappenedAt: During Lambda Test Event Invoke  
+   ErrorPhase: After/Runtime -- caught by except  
+   Fix: request_json['userid'] = str(uuid.uuid1())
+
+8. Error: module cannot access local variable 'ddb_response' where it is not associated with a value  
+   ErrorType: UnboundLocalError  
+   Cause:  ddb_response == ddbTable.scan(Select='ALL_ATTRIBUTES')  
+   ErrorHappenedAt: During Lambda Test Event Invoke  
+   ErrorPhase: After/Runtime -- caught by except  
+   Fix:  ddb_response = ddbTable.scan(Select='ALL_ATTRIBUTES')  
+   ```python Note: == -> Comparison = -> assignment```
+
+9. Error: "Parameter validation failed: Missing required parameter in input: Item"  
+   ErrorType: ParamValidationError  
+   Cause:  Items=request_json  
+   ErrorHappenedAt: During Lambda Test Event Invoke  
+   ErrorPhase: After/Runtime -- caught by except  
+   Fix: Item=request_json
+
 

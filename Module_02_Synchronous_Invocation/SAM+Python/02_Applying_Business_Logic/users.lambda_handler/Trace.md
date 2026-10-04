@@ -10,7 +10,7 @@
 8. AWS returns a response -- check if 'Item' key exists in it
 9. If found: response_body = the actual item. If not: response_body = {}
 10. status_code = 200
-11. Skip DELETE, POST, PUT blocks entirely -- route_key already matched, remaining if Checked and is False
+11. Skip DELETE, POST, PUT blocks entirely -- remaining if Checked and is False
 12. No exception raised -- skip except block
 13. Return {statusCode: 200, body: json string of the item, headers}
 
@@ -21,11 +21,12 @@
 3. response_body/status_code set to defaults(unused so far)
 4. Enter try block
 5. Check route_key == 'GET /users'? Yes -- enter this block
-6. Call scan to scan (Select='all attribute') [?]
-7. status_code = 200
-8. Skip GET / {usersid}, DELETE, PUT, POST blocks entirely -- each remaining if checked and is false
-9. No exception raised -- skip except block
-10. Return {statusCode: 200, body: json string of the items, headers}
+6. Call scan to scan (Select='all attribute') 
+7. Items from the dynamodb table will list all content in response_body
+8 status_code = 200
+9. Skip GET / {usersid}, DELETE, PUT, POST blocks entirely -- each remaining if checked and is false
+10. No exception raised -- skip except block
+11. Return {statusCode: 200, body: json string of the items, headers}
 
 ## Trace: Post /users
 
@@ -43,7 +44,7 @@
 12. Call put_item to create new item or replaces the old item with a new item in the table, if primary key (userid) already exist
 13. response_body is updated to current request_json
 14. status_code = 200
-15. Skip DELETE, PUT -- route key already matched, remaining if Checked and is False
+15. Skip DELETE, PUT block entirely -- remaining if Checked and is False
 16. No exception raised -- skip except block
 17. Return {statusCode: 200, body: json string of the item, headers}
 
@@ -80,11 +81,11 @@
 8. Check route_key == 'DELETE /users/{userid}'? No -- skip
 9. Check route_key == 'PUT /users/{userid}'? Yes -- enter this block
 10. Called json.loads but failed due to invalid json  "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\" 
-14. Rest of try block does not run
-15. exception catches it, err holds the JSONDecodeError object
-14. status code = 400
-15. exception raised -- Expecting property name enclosed in double quotes
-16. Return ```{  "statusCode": 400,
+11. Rest of try block does not run
+12. exception catches it, err holds the JSONDecodeError object
+13. status code = 400
+14. exception raised -- Expecting property name enclosed in double quotes
+15. Return ```{  "statusCode": 400,
   "body": "{\"Error:\": \"Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\"}",
   "headers": {
     "Content-Type": "application/json",
