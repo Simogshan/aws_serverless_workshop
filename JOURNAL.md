@@ -125,7 +125,7 @@
 
 4. Note: Indentation matters in YAML.
    
-### Section 02 : Add Business Logic 
+### Section 02 : Add Business Logic : September 20, 2026 - October 05, 2026
 
 ### What I Learned
 - Created a Lambda function connected to the existing Dynamodb Usertable template, which has now become version 2
