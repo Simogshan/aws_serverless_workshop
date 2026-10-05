@@ -128,8 +128,21 @@
 ### Section 02 : Add Business Logic 
 
 ### What I Learned
-- Created Lambda function with existed Dynamodb Usertable template which has become version 2 template
-- Created python file which contains business logic contains, getuser, deleteuser, adduser, getuse by ID, updateuser by ID
+- Created a Lambda function connected to the existing Dynamodb Usertable template, which has now become version 2
+- Created a Python file containing business logic: GetUser, DeleteUser, AddUser, GetUserById, UpdateUserById  
+**The code itself**  
+   - Created GET user to list all user items from the table. For short table its cheap but for the table contains more data, SCAN properties going to costs more and takes longer
+   - Created GET user by User ID, to retrieve a specific user's item from the list 
+   - Created New User by POST method, to create a user item in the table -- if no ID is provided in the request,a userID is automatically generated
+   - Created PUT user by user ID to update a specific user's item
+   - Created Delete user to delete the item from the table
+- Encountered a handful of bugs during build, deploy and in invoke
+- Created a learning method to study the code and template  
+**The Learning Method (TAG)**
+   - Reading the code is different from writing the code
+   - __Trace__: Created to study the flow of Python code, how the block of code works
+   - __Annotation__: Created to explain what a specific line is actually doing, used in both CFN Templates & Python code
+   - __Glossary__: Created to learn Python syntax, with examples and results for each   
 - Created and add dependencies in requirement file 
 
 ### Errors
