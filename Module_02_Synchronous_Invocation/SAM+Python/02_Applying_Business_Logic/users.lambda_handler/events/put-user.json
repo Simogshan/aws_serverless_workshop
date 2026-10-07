@@ -1,0 +1,8 @@
+{
+  "httpMethod": "PUT",
+  "resource": "/users/{userid}",
+  "pathParameters": {
+    "userid": "abc123"
+  },
+  "body": "{\"name\": \"Alex Updated\", \"email\": \"alex@new.com\"}"
+}
