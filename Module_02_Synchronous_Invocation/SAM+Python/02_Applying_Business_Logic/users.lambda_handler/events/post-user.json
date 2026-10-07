@@ -1,0 +1,5 @@
+{
+  "httpMethod": "POST",
+  "resource": "/users",
+  "body": "{\"name\": \"Alex\", \"email\": \"alex@example.com\"}"
+}
