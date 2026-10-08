@@ -1,4 +1,4 @@
-# AWS Serverless Pattern Workshop
+# AWS Serverless Patterns Workshop
 
 Hands-on work following AWS's Serverless Pattern Workshop - a multi-module path covering DynamoDB, Lambda, API Gateway, SAM, Cognito, CloudFormation,IAM to build a serverless backend.
 
