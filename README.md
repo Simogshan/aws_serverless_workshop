@@ -12,3 +12,4 @@ DynamoDB, Lambda (Python), API Gateway
 
 ## Write-up
 Read the full article here: [Step into Serverless World](https://builder.aws.com/content/3JHKsrBco6DE9kPeMVduh6IpIp4/step-into-serverless-world)
+[Crossing the Hurdles](Coming Soon)
