@@ -11,5 +11,6 @@ Hands-on work following AWS's Serverless Pattern Workshop - a multi-module path 
 DynamoDB, Lambda (Python), API Gateway
 
 ## Write-up
-Read the full article here: [Step into Serverless World](https://builder.aws.com/content/3JHKsrBco6DE9kPeMVduh6IpIp4/step-into-serverless-world)
-[Crossing the Hurdles](Coming Soon)
+Read the full article here: 
+- [Step into Serverless World](https://builder.aws.com/content/3JHKsrBco6DE9kPeMVduh6IpIp4/step-into-serverless-world)
+- [My Learning Approach: Trace, Annotate, Glossary](https://builder.aws.com/content/3KdiOkbQduzSKq3P1HfpxcPC393/my-learning-approach-trace-annotate-glossary)
