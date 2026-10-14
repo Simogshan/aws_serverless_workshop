@@ -212,4 +212,12 @@
    ErrorPhase: After/Runtime -- caught by except  
    Fix: Item=request_json
 
+### Section 02 Sub-Section 01 : Test Locally : October 14, 2026
+
+### What I Learned
+- Learned Test events run by using sam local invoke commands, the test event runs on local system
+- need docker engine to run sam local invoke command 
+
+
+
 
