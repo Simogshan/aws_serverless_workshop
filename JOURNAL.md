@@ -216,8 +216,24 @@
 
 ### What I Learned
 - Learned Test events run by using sam local invoke commands, the test event runs on local system
-- need docker engine to run sam local invoke command 
+- Need docker engine to run sam local invoke command 
 
+### Errors
 
+1. Error: Running AWS SAM projects locally requires a container runtime    
+   ErrorType: Runtime.UserCodeSyntaxError    
+   Cause: Docker not installed in local system    
+   ErrorHappenedAt: During sam local invoke   
+   Fix: Installed Docker in local system  
 
+2. Error: Required parameter name not set  
+   ErrorType: ValueError   
+   Cause: "USERS_TABLE": "ws-serverless-patterns-users-Users"    
+   ErrorHappenedAt: During sam local invoke  
+   Fix: "USER_TABLES": "ws-serverless-patterns-users-Users"  
 
+3. Error: Required parameter name not set   
+   ErrorType: ValueError  
+   Cause: container is running in old copy of code, from cache     
+   ErrorHappenedAt: During sam local invoke  
+   Fix: Rebuild sam build  
