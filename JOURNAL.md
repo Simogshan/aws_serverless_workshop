@@ -217,14 +217,19 @@
 ### What I Learned
 - Learned Test events run by using sam local invoke commands, the test event runs on local system
 - Need docker engine to run sam local invoke command 
+- Created a small file called env.json to give value for Lambda environment variable for local run only
+
+### Commands
+
+1. **sam local invoke -e events/event-post-user.json -n env.json** : SAM invokes lambda function locally in a container with event file as JSON as the input and an environment variable file that overrides the ones in the template. [note: -n does not mean name; it is short for --env-vars. -e is short for --event]
 
 ### Errors
 
 1. Error: Running AWS SAM projects locally requires a container runtime    
-   ErrorType: Runtime.UserCodeSyntaxError    
+   ErrorType: container runtime not available   
    Cause: Docker not installed in local system    
    ErrorHappenedAt: During sam local invoke   
-   Fix: Installed Docker in local system  
+   Fix: Installed and start Docker Desktop in local system  
 
 2. Error: Required parameter name not set  
    ErrorType: ValueError   
