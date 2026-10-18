@@ -1,16 +1,16 @@
 {
-  "resource": "/users",
-  "path": "/users",
-  "httpMethod": "POST",
-  "headers": null,
-  "multiValueHeaders": null,
-  "queryStringParameters": null,
-  "multiValueQueryStringParameters": null,
-  "pathParameters": null,
-  "stageVariables": null,
-  "requestContext": {
+  "resource": "/users",                       // The route path
+  "path": "/users",                           // The actual path 
+  "httpMethod": "POST",                       // The HTTP method request
+  "headers": null,                            // The headers key can only contain single-value headers
+  "multiValueHeaders": null,                  // The multivalueheaders key can contain multi-value headers as well as single-value headers
+  "queryStringParameters": null,              // [One value or All values], one text value per name. When a name is repeated, AWS shows only the last value
+  "multiValueQueryStringParameters": null,    // [Always a list], even a single value is in a list 
+  "pathParameters": null,                     // The value of the path variables in resource. here null because /users has no variable
+  "stageVariables": null,                     // Settings attach to a stage of your API (dev,prod)
+  "requestContext": {                         // Information the API Gateway adds about the call. It keys are the name of $context variables, and which keys appear can differ fron one API to another
       "requestId": "be946131-30c4-4396-9c29-f25f8caa91dc"
   },
-  "body": "{\"name\":\"John Doe\"}",
-  "isBase64Encoded": false
+  "body": "{\"name\":\"John Doe\"}",          // The payload the client sent, as a string. The page lists the payload among the data the event carries
+  "isBase64Encoded": false                    // Whether body is base64-encoded, It is used for binary data, and false means plain text
 }
