@@ -246,5 +246,19 @@
 4. Error: Expecting property name enclosed in double quotes    
    ErrorType: ParamValidation  
    Cause: the shell stripped the double quotes from the JSON before the CLI received it   
-   ErrorHappenedAt: file://key.json  
+   ErrorHappenedAt:   
+   Fix: file://key.json  
    Command: aws dynamodb get-item --table-name ws-serverless-patterns-user-Users --key file://key.json
+
+### Section 03: Connect an API : October 19, 2026
+
+### What I Learned
+- 
+
+### Error
+
+1. Error: 
+   ErrorType: 
+   Cause: format ${AWS-AWS::StackName}; ${AWS::AWS::StackName}-API  
+   ErrorHappenedAt: Found error before executing sam build
+   Fix: ${AWS::StackName}; ${AWS::StackName}-API
