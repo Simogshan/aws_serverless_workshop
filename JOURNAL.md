@@ -212,7 +212,7 @@
    ErrorPhase: After/Runtime -- caught by except  
    Fix: Item=request_json
 
-### Section 02 Sub-Section 01 : Test Locally : October 14, 2026
+### Section 02 Sub-Section 01 : Test Locally : October 14, 2026 - October 19, 2026
 
 ### What I Learned
 - Learned Test events run by using sam local invoke commands, the test event runs on local system
@@ -242,3 +242,9 @@
    Cause: container is running in old copy of code, from cache     
    ErrorHappenedAt: During sam local invoke  
    Fix: Rebuild sam build  
+
+4. Error: Expecting property name enclosed in double quotes    
+   ErrorType: ParamValidation  
+   Cause: the shell stripped the double quotes from the JSON before the CLI received it   
+   ErrorHappenedAt: file://key.json  
+   Command: aws dynamodb get-item --table-name ws-serverless-patterns-user-Users --key file://key.json
