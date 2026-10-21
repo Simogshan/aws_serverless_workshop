@@ -43,7 +43,7 @@ Resources:
       Tags:
         Stack: !Sub "${AWS::StackName}"     # <-- resolved: Tags are metadata, it used for cost tracking purposes for the organization, 
                                             # for learning there won't be much useful but for production it comes in handy, also multiple stacks in one account by filtering you can identify resources
-      Events:                               # <-- Specifies the events that trigger the function. Events consist of a type and properties that depends on the type such as S3,SNS,SQS,Api,
+      Events:                               # <-- Specifies the events that trigger the function. Events consist of a type and properties that depends on the type such as S3,SNS,SQS,Api,DynamoDB,Cognito,CloudWatchLogs
         GetUsersEvent:
           Type: Api
           Properties:
