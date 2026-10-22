@@ -45,11 +45,11 @@ Resources:
                                             # for learning there won't be much useful but for production it comes in handy, also multiple stacks in one account by filtering you can identify resources
       Events:                               # <-- Specifies the events that trigger the function. Events consist of a type and properties that depends on the type such as S3,SNS,SQS,Api,DynamoDB,Cognito,CloudWatchLogs
         GetUsersEvent:
-          Type: Api
-          Properties:
-            Path: /users
-            Method: get
-            RestApiId: !Ref RestAPI
+          Type: Api                         # <-- EventSource / event type
+          Properties:                       # <-- Object describing properties of this event mapping. The properties set must conform of defined type
+            Path: /users                    # <-- URI path for which this function is invoked. Must start with / 
+            Method: get                     # <-- HTTP Method for which this function is invoked
+            RestApiId: !Ref RestAPI         # <-- Identifier of RestApi resource, which must contain an operation with the given path and method. IF we dont specify the property SAM creates default resource
         PutUserEvent:
           Type: Api
           Properties:
