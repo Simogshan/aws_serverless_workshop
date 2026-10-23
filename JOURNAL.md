@@ -253,12 +253,33 @@
 ### Section 03: Connect an API : October 19, 2026
 
 ### What I Learned
-- 
+- Connected the public URLs to the service functions  
+- REST API in API Gateway is the collection of resources and methods that are integrated with backend endpoints, Lambda functions or other AWS services
+- Implemented events contains HTTP method (GET,POST,DELETE,PUT) in lambda function 
+- Added API Service in template along with API endpoint URL
+- Founded new error which related to command in terminal
 
 ### Error
 
-1. Error: 
-   ErrorType: 
-   Cause: format ${AWS-AWS::StackName}; ${AWS::AWS::StackName}-API  
-   ErrorHappenedAt: Found error before executing sam build
-   Fix: ${AWS::StackName}; ${AWS::StackName}-API
+1. Error:   
+   ErrorType:   
+   Cause: `${AWS-AWS::StackName}; ${AWS::AWS::StackName}-API`    
+   ErrorHappenedAt: Found error before executing sam build  
+   Fix: `${AWS::StackName}; ${AWS::StackName}-API`
+
+2. Error: export : The term 'export' is not recognized as the name of a cmdlet, function, script file, or operable program.  
+   ErrorType:  
+   Cause: 
+   ```powershell
+   export API_ENDPOINT=$(aws cloudformation describe-stacks --stack-name serverless-workshop-m02p01s03 --output text --query "Stacks[0].Outputs[?OutputKey=='APIEndpoint'].OutputValue")
+   echo "API endpoint: $API_ENDPOINT"
+   ```  
+   Definition-cause: export & echo commands support in linux/mac terminal not in windows powershell  
+   ErrorHappenedAt:  
+   Fix: 
+   ```powershell
+   $env:API_ENDPOINT = aws cloudformation describe-stacks --stack-name serverless-workshop-m02p01s03 --query "Stacks[0].Outputs[?OutputKey=='APIEndpoint'].OutputValue" --output text`  
+   `Write-Output "Your API Endpoint is: $env:API_ENDPOINT"
+   ```    
+   command: To get/list endpoint URLs **sam list endpoints --stack-name** your-stack-name   
+   Alternate-Fix: Type entire API endpoint URL and add /users to get result
