@@ -261,21 +261,21 @@
 
 ### Error
 
-1. Error:   
-   ErrorType:   
+1. Error: None raised. Spotted while reading the template  
+   ErrorType: none  
    Cause: `${AWS-AWS::StackName}; ${AWS::AWS::StackName}-API`    
    ErrorHappenedAt: Found error before executing sam build  
    Fix: `${AWS::StackName}; ${AWS::StackName}-API`
 
 2. Error: export : The term 'export' is not recognized as the name of a cmdlet, function, script file, or operable program.  
-   ErrorType:  
+   ErrorType: ConnamdNotFoundException (PowerShell)  
    Cause: 
    ```powershell
    export API_ENDPOINT=$(aws cloudformation describe-stacks --stack-name serverless-workshop-m02p01s03 --output text --query "Stacks[0].Outputs[?OutputKey=='APIEndpoint'].OutputValue")
    echo "API endpoint: $API_ENDPOINT"
    ```  
    Definition-cause: export & echo commands support in linux/mac terminal not in windows powershell  
-   ErrorHappenedAt:  
+   ErrorHappenedAt: running the workshop's export command in windows Powershell, to read the stack's APIEndpoint output
    Fix: 
    ```powershell
    $env:API_ENDPOINT = aws cloudformation describe-stacks --stack-name serverless-workshop-m02p01s03 --query "Stacks[0].Outputs[?OutputKey=='APIEndpoint'].OutputValue" --output text`  
@@ -283,3 +283,13 @@
    ```    
    command: To get/list endpoint URLs **sam list endpoints --stack-name** your-stack-name   
    Alternate-Fix: Type entire API endpoint URL and add /users to get result
+
+### Section 03 Sub-Section 01 : Create User Pool : October 24, 2026
+
+### What I Learned
+- 
+
+### Commands
+
+
+### Errors
