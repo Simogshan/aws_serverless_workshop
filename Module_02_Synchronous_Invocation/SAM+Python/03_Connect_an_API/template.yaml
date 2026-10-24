@@ -44,7 +44,7 @@ Resources:
         Stack: !Sub "${AWS::StackName}"     # <-- resolved: Tags are metadata, it used for cost tracking purposes for the organization, 
                                             # for learning there won't be much useful but for production it comes in handy, also multiple stacks in one account by filtering you can identify resources
       Events:                               # <-- Specifies the events that trigger the function. Events consist of a type and properties that depends on the type such as S3,SNS,SQS,Api,DynamoDB,Cognito,CloudWatchLogs
-        GetUsersEvent:
+        GetUsersEvent:                      # <-- It’s a name you chosen for this event.
           Type: Api                         # <-- EventSource / event type
           Properties:                       # <-- Object describing properties of this event mapping. The properties set must conform of defined type
             Path: /users                    # <-- URI path for which this function is invoked. Must start with / 
@@ -75,10 +75,10 @@ Resources:
             Method: delete
             RestApiId: !Ref RestAPI
 
-  RestAPI:                                   # <-- Implementng Logical ID, The name has no consequence outside the template. 
-    Type: AWS::Serverless::Api               # <-- Its a SAM resource type , created implicitly from the collection of API events defined on AWS::Serverless::Function resources
+  RestAPI:                                   # <-- Internal Logical ID for the resource, the name you chose, and SAM also uses it to name the resources it generates
+    Type: AWS::Serverless::Api               # <-- It's a SAM resource type, It creates API Gateway resources and methods that can be invoked through HTTPS endpoints
     Properties:
-      StageName: Prod                        # <-- The name of stage such as dev,test,prod. here we mention Prod which indicated it'll be used for Production 
+      StageName: Prod                        # <-- The name of the stage such as dev, test, prod. Which API Gateway uses as the first path segment in the invoke URI, here we mention Prod which indicates for Production 
       TracingEnabled: true                   # <-- Tracing request to API using X-Ray
       Tags:
         Name: !Sub ${AWS::StackName}-API
