@@ -275,7 +275,7 @@
    echo "API endpoint: $API_ENDPOINT"
    ```  
    Definition-cause: export & echo commands support in linux/mac terminal not in windows powershell  
-   ErrorHappenedAt: running the workshop's export command in windows Powershell, to read the stack's APIEndpoint output
+   ErrorHappenedAt: running the workshop's export command in windows Powershell, to read the stack's APIEndpoint output  
    Fix: 
    ```powershell
    $env:API_ENDPOINT = aws cloudformation describe-stacks --stack-name serverless-workshop-m02p01s03 --query "Stacks[0].Outputs[?OutputKey=='APIEndpoint'].OutputValue" --output text`  
