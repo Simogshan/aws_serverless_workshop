@@ -1,0 +1,187 @@
+# Annotation Legend
+# !! = confident
+# ? = uncertain guess
+# <-- = unknown, need to look up
+# <-- resolved [date] = was unknow, now understood [see below for source/explanation]
+
+AWSTemplateFormatVersion: '2010-09-09'       # Cloudformation Template !!
+Transform: AWS::Serverless-2016-10-31        # SAM Implement: <-- resolved: It tells CloudFormation to process this file as a SAM template
+Description: >
+  SAM Template for ws-serverless-patterns v4 - Cognito
+
+Globals:                                    # <-- resolved: SAM Interpretation, in template resources sometimes share common configurations such as runtime,memory,environment and CORS. Instead of duplicating them in every resource, declare them once in Globals
+  Function:
+    Runtime: python3.12
+    MemorySize: 128
+    Timeout: 100
+    Tracing: Active                         # <-- resolved: Specifies the function's X-Ray tracing mode [category: monitoring/observability]
+
+Parameters:
+  UserPoolAdminGroupName:
+    Description: User pool group name for API administrators
+    Type: String 
+    Default: apiAdmins
+  
+Resources:
+  UsersTable:                               # <-- resolved: Implementing Logical ID, It's an internal label for the resources used elsewhere in the template to reference in Outputs below !Ref UsersTable 
+    Type: AWS::DynamoDB::Table              # DynamoDB is the service. AWS::DynamoDB::Table is the resource type
+    Properties:
+      TableName: !Sub ${AWS::StackName}-Users  # setting TableName avoide the auto-generated name. !Sub inserts the stack name, which keeps the name readable and different for each stack.
+      AttributeDefinitions:                    # <-- resolved: act as a basic condition to create an attribute and its data types and also to identify/define primary key and sort key [!?]
+        - AttributeName: userid                # <-- resolved: an attribute that may act as a primary key
+          AttributeType: S
+      KeySchema:                               # <-- resolved:  mentioning attribute which going to act as a primary key 
+        - AttributeName: userid
+          KeyType: HASH                        # <-- resolved: HASH identified as partition key if its RANGE it means sort key: Y partition not primary? resolved : because dynamodb splits data to multiple servers (partition) so when you call items/row , dynamodb knows which partition your item was 
+      BillingMode: PAY_PER_REQUEST             # Type of Billing 
+
+  UsersFunction:                            # <-- resolved: Implementing Logical ID, It's an internal label for the resources used elsewhere in the template to reference in Outputs below: !Ref UsersFunction
+    Type: AWS::Serverless::Function         # <-- shown: It's a SAM resource type that SAM expands into a Lambda function and IAM role when you deploy
+    Properties:
+      Handler: src/api/users.lambda_handler   # Source / path to the python code !!
+      Description: Handler for all users related operations
+      Environment:                          # <-- resolved: tells the system to create Environment variable that your code (AWS lambda fn) can read while it is running. 
+        Variables:                          # <-- resolved: only under Environement property for lambda function / Serverless lambda function
+          USER_TABLES: !Ref UsersTable      # <-- resolved: USER_TABLE is the key of env_var and value is the physical resource name of Dynamodb table, instead of hardcoding we're applying dynamic way.
+      Policies:                             # Giving IAM permission to handle execution to Dynamodb Table referring table
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UsersTable
+      Tags:
+        Stack: !Sub "${AWS::StackName}"     # <-- resolved: Tags are metadata, it used for cost tracking purposes for the organization, 
+                                            # for learning there won't be much useful but for production it comes in handy, also multiple stacks in one account by filtering you can identify resources
+      Events:                               # <-- Specifies the events that trigger the function. Events consist of a type and properties that depends on the type such as S3,SNS,SQS,Api,DynamoDB,Cognito,CloudWatchLogs
+        GetUsersEvent:
+          Type: Api                         # <-- EventSource / event type
+          Properties:                       # <-- Object describing properties of this event mapping. The properties set must conform of defined type
+            Path: /users                    # <-- URI path for which this function is invoked. Must start with / 
+            Method: get                     # <-- HTTP Method for which this function is invoked
+            RestApiId: !Ref RestAPI         # <-- Identifier of RestApi resource, which must contain an operation with the given path and method. IF we dont specify the property SAM creates default resource
+        PutUserEvent:
+          Type: Api
+          Properties:
+            Path: /users
+            Method: post
+            RestApiId: !Ref RestAPI
+        UpdateUserEvent:
+          Type: Api
+          Properties:
+            Path: /users/{userid}
+            Method: put
+            RestApiId: !Ref RestAPI
+        GetUserEvent:
+          Type: Api
+          Properties:
+            Path: /users/{userid}
+            Method: get
+            RestApiId: !Ref RestAPI
+        DeleteUserEvent:
+          Type: Api
+          Properties:
+            Path: /users/{userid}
+            Method: delete
+            RestApiId: !Ref RestAPI
+
+  RestAPI:                                   # <-- Internal Logical ID for the resource, the name you chose, and SAM also uses it to name the resources it generates
+    Type: AWS::Serverless::Api               # <-- It's a SAM resource type, It creates API Gateway resources and methods that can be invoked through HTTPS endpoints
+    Properties:
+      StageName: Prod                        # <-- The name of the stage such as dev, test, prod. Which API Gateway uses as the first path segment in the invoke URI, here we mention Prod which indicates for Production 
+      TracingEnabled: true                   # <-- Tracing request to API using X-Ray
+      Tags:
+        Name: !Sub ${AWS::StackName}-API
+        Stack: !Sub ${AWS::StackName}
+
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub ${AWS::StackName}-UserPool
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: false
+      AutoVerifiedAttributes:
+        - email
+      Schema:
+        - Name: name
+          AttributeDataType: String
+          Mutable: true
+          Required: true
+        - Name: email
+          AttributeDataType: String
+          Mutable: true
+          Required: true
+      UsernameAttributes:
+        - email
+      UserPoolTags:
+          Key: Name
+          Value: !Sub ${AWS::StackName} User Pool
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Sub ${AWS::StackName}UserPoolClient
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_USER_SRP_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+      GenerateSecret: false
+      PreventUserExistenceErrors: ENABLED
+      RefreshTokenValidity: 30
+      SupportedIdentityProviders:
+        - COGNITO
+      UserPoolId: !Ref UserPool
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows:
+        - 'code'
+      AllowedOAuthScopes:
+        - 'email'
+        - 'openid'
+      CallbackURLs:
+        - 'http://localhost'
+
+  UserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      UserPoolId: !Ref UserPool
+      Domain: !Ref UserPoolClient
+
+  ApiAdministratorUserPoolGroup:
+    Type: AWS::Cognito::UserPoolGroup
+    Properties:
+      Description: User Group for API Administrators
+      GroupName: !Ref UserPoolAdminGroupName
+      Precedence: 0
+      UserPoolId: !Ref UserPool
+
+
+Outputs:                                    # <-- resolved: output displayed in terminal right after sam deploy finishes and they can be queried via AWS CLI using aws cloudformation describe-stacks or in CloudFormation console
+  UsersTable:
+    # <--
+    Description: DynamoDB Users Table
+    Value: !Ref UsersTable # <-- 
+
+  UsersFunction:
+    # <--
+    Description: Lambda function used to perform actions on the users data
+    Value: !Ref UsersFunction # <--
+
+  APIEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub https://${RestAPI}.execute-api.${AWS::Region}.amazonaws.com/Prod
+
+  UserPool:
+    Description: Cognito User Pool ID
+    Value: !Ref UserPool
+  
+  UserPoolClient:
+    Description: Cognito User Pool Application Client ID
+    Value: !Ref UserPoolClient
+  
+  UserPoolAdminGroupName:
+    Description: User Pool Group Name for API Administrators
+    Value: !Ref UserPoolAdminGroupName
+
+  CognitoLoginURL:
+    Description: Cognito User Pool Application Client Hosted Login UI URL
+    Value: !Sub "https://${UserPoolClient}.auth.${AWS::Region}.amazoncognito.com/login?client_id=${UserPoolClient}&response_type=code&redirect_uri=http://localhost"
+
+  CognitoAuthCommand:
+    Description: AWS CLI command for amazon Cognito User Pool Authentication
+    Value: !Sub "aws cognito-idp initiate-auth --auth-flow USER_PASSWORD_AUTH --client-id ${UserPoolClient} --auth-parameters USERNAME=<user@example.com>,PASSWORD=<password> --query 'AuthenticationResult.IdToken' --output text"
