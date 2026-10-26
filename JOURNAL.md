@@ -293,3 +293,9 @@
 
 
 ### Errors
+
+1. Error:  Unresolved resource dependencies [userPoolClient] in the Outputs block of the template    
+   ErrorType: TypoError   
+   Cause: `${userPoolClient}`    
+   ErrorHappenedAt: During sam deploy  
+   Fix: `${UserPoolClient}`
