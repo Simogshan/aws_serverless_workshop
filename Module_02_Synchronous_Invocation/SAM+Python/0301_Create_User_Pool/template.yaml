@@ -91,25 +91,25 @@ Resources:
         Stack: !Sub ${AWS::StackName}
 
   UserPool:
-    Type: AWS::Cognito::UserPool
+    Type: AWS::Cognito::UserPool                        # <-- It's a CloudFormation resource type, Amazon Cognito user pool is a user directory for web and mobile app authentication and authorization. A user pool adds layer of additional features for security, identity federation, app integration & customization of the user experience
     Properties:
-      UserPoolName: !Sub ${AWS::StackName}-UserPool
-      AdminCreateUserConfig:
-        AllowAdminCreateUserOnly: false
-      AutoVerifiedAttributes:
+      UserPoolName: !Sub ${AWS::StackName}-UserPool     # <-- Friendly name for our own userpool to able to readable, here using sub stackname with userpool 
+      AdminCreateUserConfig:                            # <-- Settings for administrators creation of users in a user pool, also contains custom invitation meeage to new user, amount of time before temp password expire, settings for allowing user sign-up
+        AllowAdminCreateUserOnly: false                 # <-- Marked administrator creation into false
+      AutoVerifiedAttributes:                           # <-- Attributes you want to verify automatically in user pool, here it's email
         - email
-      Schema:
-        - Name: name
-          AttributeDataType: String
-          Mutable: true
-          Required: true
+      Schema:                                           # <-- An array of attributes for the new user pool, Attributes are pieces of information that help to identify individual users such as name, phone number, email
+        - Name: name                                    # <-- List of user atrributes and their properties in user pool, here name means name of your user pool attribute.              
+          AttributeDataType: String                     # <-- The data format of the values for your attribute
+          Mutable: true                                 # <-- Specify whether the value of the attribute can be changed
+          Required: true                                # <-- Specify whether user pool is required or not, if value doesn't provide registration or sign-in will fail
         - Name: email
           AttributeDataType: String
           Mutable: true
           Required: true
-      UsernameAttributes:
+      UsernameAttributes:                               # <-- Specifies whether a user can use an email address or phone number as a username when they sign up
         - email
-      UserPoolTags:
+      UserPoolTags:                                     # <-- Tag key and values to assign to the user pool. a tag is a label that can use to categorize and manag user pools in different ways, such as by purpose, owner, environments or other criteria
           Key: Name
           Value: !Sub ${AWS::StackName} User Pool
 
@@ -137,18 +137,18 @@ Resources:
         - 'http://localhost'
 
   UserPoolDomain:
-    Type: AWS::Cognito::UserPoolDomain
+    Type: AWS::Cognito::UserPoolDomain                  # <-- It's a CloudFormation resource, creates a new domain for a user pool
     Properties:
-      UserPoolId: !Ref UserPool
-      Domain: !Ref UserPoolClient
+      UserPoolId: !Ref UserPool                         # <-- The ID of the user pool that is associated with the domain you're updating
+      Domain: !Ref UserPoolClient                       # <-- The name of the domain that you want to call/update, here referring userpoolclient [?]
 
   ApiAdministratorUserPoolGroup:
-    Type: AWS::Cognito::UserPoolGroup
+    Type: AWS::Cognito::UserPoolGroup                   # <-- Contains details about the group and the way that it contributes to IAM role decisions with identity pools, users get credentials for the role associated with their highest-priority group
     Properties:
-      Description: User Group for API Administrators
-      GroupName: !Ref UserPoolAdminGroupName
-      Precedence: 0
-      UserPoolId: !Ref UserPool
+      Description: User Group for API Administrators    # <-- A description of the group that we're creating
+      GroupName: !Ref UserPoolAdminGroupName            # <-- A name of the group, must be unique here we referring the name we mentioned in parameter
+      Precedence: 0                                     # <-- A non-negative integer value that specifies the precedence of this group relative to the other group that a user can belong to in the user pool, 0 is highest value, groups wwith lower precedence values takes over group the higher or null value [? confuse with concept, understood but able to picture it ]
+      UserPoolId: !Ref UserPool                         # <-- The ID of the user pool where you want to create a user group 
 
 
 Outputs:                                    # <-- resolved: output displayed in terminal right after sam deploy finishes and they can be queried via AWS CLI using aws cloudformation describe-stacks or in CloudFormation console
