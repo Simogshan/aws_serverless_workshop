@@ -114,26 +114,26 @@ Resources:
           Value: !Sub ${AWS::StackName} User Pool
 
   UserPoolClient:
-    Type: AWS::Cognito::UserPoolClient
+    Type: AWS::Cognito::UserPoolClient                  # <-- It's a CloudFormation resource, It's a configuration within a user pool that act as an intermediary, allowing your web, mobile or backend applications to connect with Amazon Cognito to authenticate users.
     Properties:
-      ClientName: !Sub ${AWS::StackName}UserPoolClient
-      ExplicitAuthFlows:
-        - ALLOW_USER_PASSWORD_AUTH
-        - ALLOW_USER_SRP_AUTH
-        - ALLOW_REFRESH_TOKEN_AUTH
-      GenerateSecret: false
-      PreventUserExistenceErrors: ENABLED
-      RefreshTokenValidity: 30
-      SupportedIdentityProviders:
+      ClientName: !Sub ${AWS::StackName}UserPoolClient  # <-- Friendly name for the app client that you want to create
+      ExplicitAuthFlows:                                # <-- Authentication flows [where user makes an initial choice, security credentials and respond to additional challenges] that we want our user pool client to suppor
+        - ALLOW_USER_PASSWORD_AUTH                      # <-- Enable user password-based authentication. In this flow, Cognito receives the password instead of using the SRP protocol to verify passwords
+        - ALLOW_USER_SRP_AUTH                           # <-- Enable SRP [secure remote password]-based authentication
+        - ALLOW_REFRESH_TOKEN_AUTH                      # <-- Enable authflow to refresh tokens
+      GenerateSecret: false                             # <-- If true, generated a client secret for the app client
+      PreventUserExistenceErrors: ENABLED               # <-- Errors & responses that you want amazon cognito APIs to return during the authentication,accout confirmation and password recovery when the user doesnt exist in the user pool. when set to ENABLED & the user doesn't exist, authentication returns an error indicating either the username or password was incoorect.
+      RefreshTokenValidity: 30                          # <-- Refresh token rotation
+      SupportedIdentityProviders:                       # <-- List of provider names for the identity providers (IdPs) that are supported on this client such as COGNITO, facebook, Google
         - COGNITO
-      UserPoolId: !Ref UserPool
-      AllowedOAuthFlowsUserPoolClient: true
-      AllowedOAuthFlows:
-        - 'code'
-      AllowedOAuthScopes:
+      UserPoolId: !Ref UserPool                         # <-- ID of the user pool where you want to create an app client
+      AllowedOAuthFlowsUserPoolClient: true             # <-- Set to true to use OAuth 2.0 authorization server [that authenticates the user, manges consent, issues security tokens to client applications] featues in our app client
+      AllowedOAuthFlows:                                # <-- OAuth grant types that you want your app client to generate for clients in manged login authentication
+        - 'code'                                        # <-- Provides an authorizationn code as the response. This code can be exchanged for access tokens with /oauth2/token endpoint
+      AllowedOAuthScopes:                               # <-- OAuth, OpenID Connect (OIDC), and custom scopes that you want to permit your app client to authorize access with
         - 'email'
         - 'openid'
-      CallbackURLs:
+      CallbackURLs:                                     # <-- A list of allowed redirect, or callback, URLs for managed login authentication
         - 'http://localhost'
 
   UserPoolDomain:
