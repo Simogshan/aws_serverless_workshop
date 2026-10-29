@@ -16,12 +16,12 @@ Globals:                                    # <-- resolved: SAM Interpretation, 
     Timeout: 100
     Tracing: Active                         # <-- resolved: Specifies the function's X-Ray tracing mode [category: monitoring/observability]
 
-Parameters:
+Parameters:                                 # <-- It's a custom input value that you can pass through a template at runtime (when you create or update a stack), It make your template reusable intead of hardcoding values
   UserPoolAdminGroupName:
     Description: User pool group name for API administrators
     Type: String 
-    Default: apiAdmins
-  
+    Default: apiAdmins                      # <-- default name for groupname under AWS::Cognito::UserPoolGroup
+    
 Resources:
   UsersTable:                               # <-- resolved: Implementing Logical ID, It's an internal label for the resources used elsewhere in the template to reference in Outputs below !Ref UsersTable 
     Type: AWS::DynamoDB::Table              # DynamoDB is the service. AWS::DynamoDB::Table is the resource type
