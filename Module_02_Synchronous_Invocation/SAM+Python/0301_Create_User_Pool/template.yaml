@@ -91,15 +91,15 @@ Resources:
         Stack: !Sub ${AWS::StackName}
 
   UserPool:
-    Type: AWS::Cognito::UserPool                        # <-- It's a CloudFormation resource type, Amazon Cognito user pool is a user directory for web and mobile app authentication and authorization. A user pool adds layer of additional features for security, identity federation, app integration & customization of the user experience
+    Type: AWS::Cognito::UserPool                        # <-- It's a CloudFormation resource type, Amazon Cognito user pool is a user directory for web and mobile app authentication and authorization. A user pool adds a layer of additional features for security, identity federation, app integration & customization of the user experience
     Properties:
-      UserPoolName: !Sub ${AWS::StackName}-UserPool     # <-- Friendly name for our own userpool to able to readable, here using sub stackname with userpool 
-      AdminCreateUserConfig:                            # <-- Settings for administrators creation of users in a user pool, also contains custom invitation meeage to new user, amount of time before temp password expire, settings for allowing user sign-up
+      UserPoolName: !Sub ${AWS::StackName}-UserPool     # <-- Friendly name for our own userpool so it's readable, here using sub stackname with userpool 
+      AdminCreateUserConfig:                            # <-- Settings for administrators creation of users in a user pool, also contains custom invitation message to new user, amount of time before temp password expire, settings for allowing user sign-up
         AllowAdminCreateUserOnly: false                 # <-- Marked administrator creation into false
       AutoVerifiedAttributes:                           # <-- Attributes you want to verify automatically in user pool, here it's email
         - email
       Schema:                                           # <-- An array of attributes for the new user pool, Attributes are pieces of information that help to identify individual users such as name, phone number, email
-        - Name: name                                    # <-- List of user atrributes and their properties in user pool, here name means name of your user pool attribute.              
+        - Name: name                                    # <-- List of user attributes and their properties in user pool, here name means name of your user pool attribute.              
           AttributeDataType: String                     # <-- The data format of the values for your attribute
           Mutable: true                                 # <-- Specify whether the value of the attribute can be changed
           Required: true                                # <-- Specify whether user pool is required or not, if value doesn't provide registration or sign-in will fail
@@ -109,7 +109,7 @@ Resources:
           Required: true
       UsernameAttributes:                               # <-- Specifies whether a user can use an email address or phone number as a username when they sign up
         - email
-      UserPoolTags:                                     # <-- Tag key and values to assign to the user pool. a tag is a label that can use to categorize and manag user pools in different ways, such as by purpose, owner, environments or other criteria
+      UserPoolTags:                                     # <-- Tag key and values to assign to the user pool. a tag is a label that can use to categorize and manage user pools in different ways, such as by purpose, owner, environments or other criteria
           Key: Name
           Value: !Sub ${AWS::StackName} User Pool
 
@@ -117,19 +117,19 @@ Resources:
     Type: AWS::Cognito::UserPoolClient                  # <-- It's a CloudFormation resource, It's a configuration within a user pool that act as an intermediary, allowing your web, mobile or backend applications to connect with Amazon Cognito to authenticate users.
     Properties:
       ClientName: !Sub ${AWS::StackName}UserPoolClient  # <-- Friendly name for the app client that you want to create
-      ExplicitAuthFlows:                                # <-- Authentication flows [where user makes an initial choice, security credentials and respond to additional challenges] that we want our user pool client to suppor
+      ExplicitAuthFlows:                                # <-- Authentication flows [where user makes an initial choice, security credentials and respond to additional challenges] that we want our user pool client to support
         - ALLOW_USER_PASSWORD_AUTH                      # <-- Enable user password-based authentication. In this flow, Cognito receives the password instead of using the SRP protocol to verify passwords
         - ALLOW_USER_SRP_AUTH                           # <-- Enable SRP [secure remote password]-based authentication
         - ALLOW_REFRESH_TOKEN_AUTH                      # <-- Enable authflow to refresh tokens
-      GenerateSecret: false                             # <-- If true, generated a client secret for the app client
-      PreventUserExistenceErrors: ENABLED               # <-- Errors & responses that you want amazon cognito APIs to return during the authentication,accout confirmation and password recovery when the user doesnt exist in the user pool. when set to ENABLED & the user doesn't exist, authentication returns an error indicating either the username or password was incoorect.
+      GenerateSecret: false                             # <-- If true, generates a client secret for the app client
+      PreventUserExistenceErrors: ENABLED               # <-- Errors & responses that you want amazon cognito APIs to return during the authentication, account confirmation and password recovery when the user doesn't exist in the user pool. when set to ENABLED & the user doesn't exist, authentication returns an error indicating either the username or password was incorrect.
       RefreshTokenValidity: 30                          # <-- Refresh token rotation
       SupportedIdentityProviders:                       # <-- List of provider names for the identity providers (IdPs) that are supported on this client such as COGNITO, facebook, Google
         - COGNITO
       UserPoolId: !Ref UserPool                         # <-- ID of the user pool where you want to create an app client
-      AllowedOAuthFlowsUserPoolClient: true             # <-- Set to true to use OAuth 2.0 authorization server [that authenticates the user, manges consent, issues security tokens to client applications] featues in our app client
-      AllowedOAuthFlows:                                # <-- OAuth grant types that you want your app client to generate for clients in manged login authentication
-        - 'code'                                        # <-- Provides an authorizationn code as the response. This code can be exchanged for access tokens with /oauth2/token endpoint
+      AllowedOAuthFlowsUserPoolClient: true             # <-- Set to true to use OAuth 2.0 authorization server [that authenticates the user, manages consent, issues security tokens to client applications] features in our app client
+      AllowedOAuthFlows:                                # <-- OAuth grant types that you want your app client to generate for clients in managed login authentication
+        - 'code'                                        # <-- Provides an authorization code as the response. This code can be exchanged for access tokens with /oauth2/token endpoint
       AllowedOAuthScopes:                               # <-- OAuth, OpenID Connect (OIDC), and custom scopes that you want to permit your app client to authorize access with
         - 'email'
         - 'openid'
@@ -140,14 +140,14 @@ Resources:
     Type: AWS::Cognito::UserPoolDomain                  # <-- It's a CloudFormation resource, creates a new domain for a user pool
     Properties:
       UserPoolId: !Ref UserPool                         # <-- The ID of the user pool that is associated with the domain you're updating
-      Domain: !Ref UserPoolClient                       # <-- The name of the domain that you want to call/update, here referring userpoolclient [?]
+      Domain: !Ref UserPoolClient                       # <-- The name of the domain that you want to call/update, here referring userpoolclient 
 
   ApiAdministratorUserPoolGroup:
     Type: AWS::Cognito::UserPoolGroup                   # <-- Contains details about the group and the way that it contributes to IAM role decisions with identity pools, users get credentials for the role associated with their highest-priority group
     Properties:
       Description: User Group for API Administrators    # <-- A description of the group that we're creating
       GroupName: !Ref UserPoolAdminGroupName            # <-- A name of the group, must be unique here we referring the name we mentioned in parameter
-      Precedence: 0                                     # <-- A non-negative integer value that specifies the precedence of this group relative to the other group that a user can belong to in the user pool, 0 is highest value, groups wwith lower precedence values takes over group the higher or null value [? confuse with concept, understood but able to picture it ]
+      Precedence: 0                                     # <-- A non-negative integer value that specifies the precedence of this group relative to the other group that a user can belong to in the user pool, 0 is highest value, groups wwith lower precedence values takes over group the higher or null value
       UserPoolId: !Ref UserPool                         # <-- The ID of the user pool where you want to create a user group 
 
 
