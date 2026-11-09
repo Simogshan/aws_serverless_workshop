@@ -298,3 +298,12 @@
    Cause: `${userPoolClient}`    
    ErrorHappenedAt: During sam deploy  
    Fix: `${UserPoolClient}`
+
+### Section 03 Sub-Section 02 : Secure the API : November 10, 2026 - 
+
+### What I Learned
+- 
+
+### Errors
+
+1. 
