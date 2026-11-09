@@ -284,13 +284,12 @@
    command: To get/list endpoint URLs **sam list endpoints --stack-name** your-stack-name   
    Alternate-Fix: Type entire API endpoint URL and add /users to get result
 
-### Section 03 Sub-Section 01 : Create User Pool : October 24, 2026
+### Section 03 Sub-Section 01 : Create User Pool : October 24, 2026 - November 02, 2026
 
 ### What I Learned
-- 
-
-### Commands
-
+- Learned about CFN property called Parameter, adding custom input through template during creation or update where template becomes reusable instead of hardcoding values
+- Learned about the AWS service called Cognito - UserPool used for authorization, validation of user during signup/signin
+- Learned 4 under services related to Cognito, UserPool, USerPoolClient, UserPoolDomain, UserPoolGroup. Services, property definitions are in template file.  
 
 ### Errors
 
