@@ -87,8 +87,16 @@ Resources:
       StageName: Prod                        # <-- The name of the stage such as dev, test, prod. Which API Gateway uses as the first path segment in the invoke URI, here we mention Prod which indicates for Production 
       TracingEnabled: true                   # <-- Tracing request to API using X-Ray
       Tags:
-        Name: !Sub ${AWS::StackName}-API
-        Stack: !Sub ${AWS::StackName}
+        Name: !Sub "${AWS::StackName}-API"
+        Stack: !Sub "${AWS::StackName}"
+      Auth:
+        DefaultAuthorizer: LambdaTokenAuthorizer
+        Authorizers:
+          LambdaTokenAuthorizer:
+            FunctionArn: !GetAtt AuthorizerFunction.Arn
+            Identity:
+              Headers:
+                - Authorization
 
   UserPool:
     Type: AWS::Cognito::UserPool                        # <-- It's a CloudFormation resource type, Amazon Cognito user pool is a user directory for web and mobile app authentication and authorization. A user pool adds layer of additional features for security, identity federation, app integration & customization of the user experience
