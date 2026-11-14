@@ -6,4 +6,4 @@
 |R04    |Cognito        |AWS::Cognito::UserPoolGroup (CloudFormation)|UserPoolGroup Properties|[AWS::Cognito::UserPoolGroup](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-cognito-userpoolgroup.html)|
 |R05    |SAM            |Lambda function                             |Function in serverless template|[AWS::Serverless::Function](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html)|
 |R06    |SAM            |Api (function event source)                 |Path, Method, RestApiId in the template|[API](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-function-api.html)|
-|R07    |SAM            |API                |API in serverless template             |[AWS::Serverless::API](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-api.html)|
+|R07    |SAM            |API                |API in serverless template             |[AWS::Serverless::Api](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-api.html)|
