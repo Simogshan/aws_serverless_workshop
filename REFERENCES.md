@@ -12,3 +12,4 @@
 |R10    |CloudFormation            |Template Section               |Resources is the only required section          |[CFN Template Sections](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html)|
 |R11    |CloudFormation            |Template Reference Guide               |Looking up resource types and their properties         |[CFN Template Reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/introduction.html)|
 |R12    |CloudFormation            |Template Parameter Reference               |Looking up parameter structure and their properties         |[CFN Parameter Section](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html)|
+|R13    |Cognito           |Authenticating users           |Authenticating users with Amazon Cognito user pools        |[Cognito User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools.html)|
