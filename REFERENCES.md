@@ -23,3 +23,4 @@
 |R21    |SAM CLI           |SAM list resources         |	Listing the resources SAM creates        |[sam list resources](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-list-resources.html)|
 |R22    |SAM CLI           |Introduction to testing with sam local invoke         |Using --env-vars with a cloud table       |[Using sam local invoke](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/using-sam-cli-local-invoke.html)|
 |R23    |AWS CLI           |Using quotation marks with strings         |Shell quoting rules for JSON parameters       |[CLI Usage Parametrs Quoting strings](https://docs.aws.amazon.com/us_en/cli/latest/userguide/cli-usage-parameters-quoting-strings.html)|
+|R24    |Lambda           |Lambda context object (Python)        |What context holds       |[Lambda context object](https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html)|
